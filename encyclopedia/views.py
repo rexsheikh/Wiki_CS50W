@@ -26,18 +26,21 @@ def entry(request, title):
         })
 
 
-def search(request, search):
+def search(request):
+    # I referenced https://stackoverflow.com/questions/4706255/how-to-get-value-from-form-field-in-django-framework
+    # to see how to grab the inputted value from the name field from the user submitted form.
+    query = request.GET.get('q')
     entries = util.list_entries()
     res = []
     for entry in entries:
-        if search == entry:
-            rawMarkdown = util.get_entry(search)
+        if query.lower() == entry.lower():
+            rawMarkdown = util.get_entry(query)
             html = markdown2.markdown(rawMarkdown)
             return render(request, "encyclopedia/layout.html", {
                 "html": html,
-                "title": search
+                "title": query
             })
-        if search in entry:
+        if query.lower() in entry.lower():
             res.append(entry)
     if (len(res) == 0):
         return render(request, "encyclopedia/layout.html", {
