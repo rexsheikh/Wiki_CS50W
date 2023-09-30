@@ -52,3 +52,23 @@ def search(request):
             "entries": res,
             "searchBool": True
         })
+
+
+def newpage(request):
+    if request.method == "POST":
+        entries = util.list_entries()
+        newPageTitle = request.POST.get('newPageTitle')
+        for entry in entries:
+            if newPageTitle.lower() == entry.lower():
+                return HttpResponse("ERROR! Page already exists")
+        newPageContent = request.POST.get("newPageContent")
+        html = markdown2.markdown(newPageContent)
+        return render(request, "encylopedia/layout.html", {
+            "html": html,
+            "title": newPageTitle
+        })
+
+    else:
+        return render(request, "encyclopedia/newpage.html")
+
+        # return HttpResponse("good test")

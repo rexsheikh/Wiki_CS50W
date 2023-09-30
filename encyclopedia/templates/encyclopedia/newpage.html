@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="row">
+        <div class="main col-lg-10 col-md-9">
+            {% block body %}
+            <h2>Create a New Page</h2>
+            <form action="{% url 'encyclopedia:newpage' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="newPageTitle" placeholder="Enter a Page Title">
+                <br>
+                <textarea id="w3review" name="newPageContent"
+                    placeholder="Use markdown to create a new page"></textarea>
+                <input type="submit" value="Submit">
+            </form>
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+
+</html>

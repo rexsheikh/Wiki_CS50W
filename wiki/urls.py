@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("encyclopedia.urls")),
     path('wiki/', include("encyclopedia.urls")),
-    path('search/', include("encyclopedia.urls"))
+    path('search/', include("encyclopedia.urls")),
+    path('newpage/', include("encyclopedia.urls")),
 ]
