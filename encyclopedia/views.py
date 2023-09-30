@@ -43,12 +43,12 @@ def search(request):
         if query.lower() in entry.lower():
             res.append(entry)
     if (len(res) == 0):
-        return render(request, "encyclopedia/layout.html", {
+        return render(request, "encyclopedia/index.html", {
             "title": "Search Results",
             "html": "<h1> No matching search results. </h1>"
         })
     else:
-        return (request, "encyclopedia/index.html", {
+        return render(request, "encyclopedia/index.html", {
             "entries": res,
             "searchBool": True
         })
