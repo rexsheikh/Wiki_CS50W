@@ -73,3 +73,8 @@ def newpage(request):
 
     else:
         return render(request, "encyclopedia/newpage.html")
+
+
+def editpage(request):
+    title = request.GET.get('title')
+    return HttpResponse(title)
