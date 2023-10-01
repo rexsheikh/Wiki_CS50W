@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 import markdown2
 
 from . import util
@@ -62,13 +64,12 @@ def newpage(request):
             if newPageTitle.lower() == entry.lower():
                 return HttpResponse("ERROR! Page already exists")
         newPageContent = request.POST.get("newPageContent")
+        util.save_entry(newPageTitle, newPageContent)
         html = markdown2.markdown(newPageContent)
-        return render(request, "encylopedia/layout.html", {
+        return render(request, "encyclopedia/layout.html", {
             "html": html,
             "title": newPageTitle
         })
 
     else:
         return render(request, "encyclopedia/newpage.html")
-
-        # return HttpResponse("good test")
