@@ -31,10 +31,12 @@
             {% endblock %}
         </div>
         <div class="main col-lg-10 col-md-9">
-            <form action="{% url 'encyclopedia:editpage' %}" method="get">
+            {% if title is not None and editPage is not True %}
+            <form action="{% url 'encyclopedia:editpage'%}" method="get">
                 <input type="hidden" name="title" value="{{ title }}">
                 <input type="submit" value="Edit Page">
             </form>
+            {% endif %}
             {% block body %}
             {{ html|safe }}
             {% endblock %}

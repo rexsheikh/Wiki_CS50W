@@ -76,5 +76,21 @@ def newpage(request):
 
 
 def editpage(request):
-    title = request.GET.get('title')
-    return HttpResponse(title)
+
+    if request.method == "POST":
+        title = request.POST.get('title')
+        rawMarkdown = request.POST.get('updatedPage')
+        util.save_entry(title, rawMarkdown)
+        html = markdown2.markdown(rawMarkdown)
+        return render(request, "encyclopedia/layout.html", {
+            "html": html,
+            "title": title
+        })
+    else:
+        title = request.GET.get('title')
+        rawMarkdown = util.get_entry(title)
+        return render(request, "encyclopedia/editpage.html", {
+            "editPage": True,
+            "title": title,
+            "rawMarkdown": rawMarkdown,
+        })
